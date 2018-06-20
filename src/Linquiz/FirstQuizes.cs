@@ -359,6 +359,27 @@ namespace Linquiz
         }
 
         [Fact]
+        public void multiply_numbers_from_2_lists()
+        {
+            var numbers1 = new List<int> {2, 3, 4};
+            var numbers2 = new List<int> {10, 100, 1000};
+
+            var result = numbers1;
+
+            result.Should().BeEquivalentTo(new List<int> {20, 300, 4000});
+        }
+
+        [Fact]
+        public void calculate_squares()
+        {
+            var numbers = new List<int> {2, 3, 4};
+
+            var result = numbers;
+
+            result.Should().BeEquivalentTo(new List<int> {4, 9, 16});
+        }
+
+        [Fact]
         public void find_all_possible_couples()
         {
             var words = new List<int>
@@ -398,7 +419,7 @@ namespace Linquiz
         [InlineData(9, false)]
         [InlineData(14, false)]
         [InlineData(17, true)]
-        public void prime_check(int number, bool expected)
+        public void check_if_a_number_is_prime(int number, bool expected)
         {
             bool IsPrime(int n)
             {
@@ -526,7 +547,22 @@ namespace Linquiz
         [Fact]
         public void find_the_last_matching_item_in_2_lists()
         {
-            "jls".Contains(");
+            var list1 = new List<int> { 5, 2, 3, 17, 19, 100, 200};
+            var list2 = new List<int> { 5, 2, 3, 17, 19, 888, 300, 100};
+
+            var result = 0;
+
+            result.Should().Be(19);
+        }
+
+        [Fact]
+        public void take_the_central_element_of_a_list_with_an_odd_number_of_items()
+        {
+            var list = new List<int> { 5, 2, 3, 17, 19, 100, 200};
+
+            var result = 0;
+
+            result.Should().Be(17);
         }
     }
 }
