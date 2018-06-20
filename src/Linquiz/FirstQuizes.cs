@@ -58,7 +58,7 @@ namespace Linquiz
             StringCollectionAssertions stringCollectionAssertions = result.Should();
             stringCollectionAssertions.ContainInOrder(new List<string> {"baz", "bar", "foo"});
         }
-        
+
         [Fact]
         public void randomly_shuffle_a_list()
         {
@@ -194,6 +194,7 @@ namespace Linquiz
                 {"qux", 1}
             });
         }
+
         [Fact]
         public void count_word_occourrences_removing_words_that_appears_only_once()
         {
@@ -230,7 +231,7 @@ namespace Linquiz
                 "bar",
                 "baz",
                 "foo",
-                "foo",  // There are 3 occourrences of "foo". Remove all of them
+                "foo", // There are 3 occourrences of "foo". Remove all of them
                 "qux"
             };
 
@@ -244,6 +245,7 @@ namespace Linquiz
                 "qux"
             });
         }
+
         [Fact]
         public void only_keep_up_to_2_occourrences_of_an_item()
         {
@@ -254,11 +256,11 @@ namespace Linquiz
                 "bar",
                 "baz",
                 "foo",
-                "foo",  // This is the 3rd "foo" occourrences. Remove it
+                "foo", // This is the 3rd "foo" occourrences. Remove it
                 "qux",
                 "qux",
                 "qux", // 3rd and
-                "qux"  // 4th occourrences of "qux" must be removed
+                "qux" // 4th occourrences of "qux" must be removed
             };
 
             var result = words;
@@ -275,6 +277,33 @@ namespace Linquiz
                 "qux",
                 // "qux",
                 // "qux"
+            });
+        }
+
+        [Fact]
+        public void zip_lists()
+        {
+            var people = new List<string>
+            {
+                "Stefano",
+                "Leo",
+                "Ale",
+            };
+
+            var drinks = new List<string>()
+            {
+                "water",
+                "Martini dry",
+                "vodka"
+            };
+
+            var result = new List<string>();
+
+            result.Should().BeEquivalentTo(new List<string>
+            {
+                "Stefano drinks water",
+                "Leo drinks Martini dry",
+                "Ale drinks vodka"
             });
         }
     }
