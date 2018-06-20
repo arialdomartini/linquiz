@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using FluentAssertions.Collections;
@@ -297,13 +298,41 @@ namespace Linquiz
                 "vodka"
             };
 
-            var result = new List<string>();
+            var result = people;
 
             result.Should().BeEquivalentTo(new List<string>
             {
                 "Stefano drinks water",
                 "Leo drinks Martini dry",
                 "Ale drinks vodka"
+            });
+        }
+
+        [Fact]
+        public void find_all_possible_couples()
+        {
+            var words = new List<int>
+            {
+                1,
+                2,
+                3
+            };
+
+            var result = new List< (int, int) >();
+
+            result.Should().BeEquivalentTo(new List< (int, int) >
+            {
+                (1, 1),
+                (1, 2),
+                (1, 3),
+
+                (2, 1),
+                (2, 2),
+                (2, 3),
+
+                (3, 1),
+                (3, 2),
+                (3, 3)
             });
         }
     }
