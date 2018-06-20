@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using FluentAssertions.Collections;
 using Xunit;
@@ -56,6 +57,27 @@ namespace Linquiz
 
             StringCollectionAssertions stringCollectionAssertions = result.Should();
             stringCollectionAssertions.ContainInOrder(new List<string> {"baz", "bar", "foo"});
+        }
+        
+        [Fact]
+        public void randomly_shuffle_a_list()
+        {
+            var numbers = new List<int> {1, 2, 3, 4, 5};
+
+            IEnumerable<int> Shuffle(IEnumerable<int> list)
+            {
+                // Implement here
+                return list;
+            }
+
+            var results = Enumerable.Range(0, 100)
+                .Select(i => Shuffle(numbers))
+                .Distinct()
+                .ToList();
+
+            results.Count.Should().BeGreaterThan(1);
+
+            results.ForEach(r => r.Should().BeEquivalentTo(numbers));
         }
     }
 }
