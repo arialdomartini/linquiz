@@ -368,7 +368,7 @@ namespace Linquiz
             bool ContainsAtLeastAnEvenNumber(IEnumerable<int> list)
             {
                 // implement here with LINQ
-                throw new NotImplementedException(); 
+                throw new NotImplementedException();
             }
 
             ContainsAtLeastAnEvenNumber(a).Should().Be(true);
@@ -384,7 +384,7 @@ namespace Linquiz
             bool ContainsOnlyEvenNumbers(IEnumerable<int> list)
             {
                 // implement here with LINQ
-                throw new NotImplementedException(); 
+                throw new NotImplementedException();
             }
 
             ContainsOnlyEvenNumbers(a).Should().Be(true);
@@ -416,6 +416,28 @@ namespace Linquiz
             SatisfiesAllTheRules(b).Should().Be(false);
             SatisfiesAllTheRules(c).Should().Be(false);
             SatisfiesAllTheRules(d).Should().Be(false);
+        }
+
+        [Fact]
+        public void concatenate_lists()
+        {
+            var list1 = new List<int> {1, 2, 3, 4};
+            var list2 = new List<int> {5, 6, 7};
+
+            var result = list1;
+
+            result.Should().ContainInOrder(new List<int> {1, 2, 3, 4, 5, 6, 7});
+        }
+
+        [Fact]
+        public void interleave_2_lists_items()
+        {
+            var list1 = new List<int> {1, 3, 5};
+            var list2 = new List<int> {2, 4, 6};
+
+            var result = list1;
+
+            result.Should().ContainInOrder(new List<int> {1, 2, 3, 4, 5, 6});
         }
     }
 }
