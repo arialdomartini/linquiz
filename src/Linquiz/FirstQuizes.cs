@@ -335,5 +335,87 @@ namespace Linquiz
                 (3, 3)
             });
         }
+
+        [Theory]
+        [InlineData(1, true)]
+        [InlineData(2, true)]
+        [InlineData(3, true)]
+        [InlineData(4, false)]
+        [InlineData(5, true)]
+        [InlineData(6, false)]
+        [InlineData(7, true)]
+        [InlineData(8, false)]
+        [InlineData(9, false)]
+        [InlineData(14, false)]
+        [InlineData(17, true)]
+        public void prime_check(int number, bool expected)
+        {
+            bool IsPrime(int n)
+            {
+                // implement here with LINQ
+                throw new NotImplementedException(); 
+            }
+
+            IsPrime(number).Should().Be(expected);
+        }
+
+        [Fact]
+        public void check_if_list_contains_at_least_one_item_satisfying_a_property()
+        {
+            var a = new List<int> {1, 2, 3};
+            var b = new List<int> {1, 3, 5};
+
+            bool ContainsAtLeastAnEvenNumber(IEnumerable<int> list)
+            {
+                // implement here with LINQ
+                throw new NotImplementedException(); 
+            }
+
+            ContainsAtLeastAnEvenNumber(a).Should().Be(true);
+            ContainsAtLeastAnEvenNumber(b).Should().Be(false);
+        }
+
+        [Fact]
+        public void check_if_list_contains_only_items_satisfying_a_property()
+        {
+            var a = new List<int> {2, 4, 6};
+            var b = new List<int> {1, 3, 5};
+
+            bool ContainsOnlyEvenNumbers(IEnumerable<int> list)
+            {
+                // implement here with LINQ
+                throw new NotImplementedException(); 
+            }
+
+            ContainsOnlyEvenNumbers(a).Should().Be(true);
+            ContainsOnlyEvenNumbers(b).Should().Be(false);
+        }
+
+        [Fact]
+        public void check_if_all_the_items_satisfy_all_the_required_properties()
+        {
+            var a = new List<int> {2, 4, 8};
+            var b = new List<int> {1, 4, 8};
+            var c = new List<int> {2, 4, 500};
+            var d = new List<int> {2, 6, 8};
+
+            var rules = new Dictionary<string, Func<int, bool>>
+            {
+                {"is even", n => n % 2 == 0},
+                {"is not 6", n => n != 6},
+                {"is smaller than 100", n => n < 100}
+            };
+
+            bool SatisfiesAllTheRules(IEnumerable<int> list)
+            {
+                // implement here with LINQ
+                throw new NotImplementedException(); 
+            }
+
+            SatisfiesAllTheRules(a).Should().Be(true);
+            SatisfiesAllTheRules(b).Should().Be(false);
+            SatisfiesAllTheRules(c).Should().Be(false);
+            SatisfiesAllTheRules(d).Should().Be(false);
+        }
     }
 }
