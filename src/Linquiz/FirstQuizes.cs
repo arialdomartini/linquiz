@@ -439,5 +439,44 @@ namespace Linquiz
 
             result.Should().ContainInOrder(new List<int> {1, 2, 3, 4, 5, 6});
         }
+
+        [Fact]
+        public void keep_only_matching_part_of_two_list()
+        {
+            var list1 = new List<int> { 5, 2, 3, 17, 19, 100, 200};
+            var list2 = new List<int> { 5, 2, 3, 17, 19, 888, 300, 100};
+
+            var result = list1;
+
+            result.Should().ContainInOrder(new List<int> { 5, 2, 3, 17, 19});
+        }
+
+        [Fact]
+        public void collect_the_non_matching_items_from_the_first_list()
+        {
+            var list1 = new List<int> { 5, 2, 3, 17, 19, 100, 200};
+            var list2 = new List<int> { 5, 2, 3, 17, 19, 888, 300, 100};
+
+            var result = list1;
+
+            result.Should().ContainInOrder(new List<int> { 100, 200});
+        }
+
+        [Fact]
+        public void collect_the_non_matching_items_from_all_the_lists()
+        {
+            var list1 = new List<int> { 5, 2, 3, 17, 19, 100, 200};
+            var list2 = new List<int> { 5, 2, 3, 17, 19, 888, 300, 100};
+
+            var result = list1;
+
+            result.Should().ContainInOrder(new List<int> { 100, 200, 888, 300, 100});
+        }
+
+        [Fact]
+        public void find_the_last_matching_item_in_2_lists()
+        {
+            "jls".Contains(");
+        }
     }
 }
