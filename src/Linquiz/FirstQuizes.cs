@@ -92,6 +92,26 @@ namespace Linquiz
         }
 
         [Fact]
+        public void trim_strings()
+        {
+            var strings = new List<string>
+            {
+                " foo  ",
+                "bar  ",
+                "  baz"
+            };
+
+            var result = strings;
+
+            result.Should().ContainInOrder(new List<string>
+            {
+                "foo",
+                "bar",
+                "baz"
+            });
+        }
+
+        [Fact]
         public void take_the_first_element_of_a_list()
         {
             var numbers = new List<int> {10, 20, 30, 40, 50};
