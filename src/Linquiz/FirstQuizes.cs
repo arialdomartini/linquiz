@@ -92,6 +92,36 @@ namespace Linquiz
         }
 
         [Fact]
+        public void take_the_first_element_of_a_list()
+        {
+            var numbers = new List<int> {10, 20, 30, 40, 50};
+
+            var result = 0;
+
+            result.Should().Be(10);
+        }
+
+        [Fact]
+        public void take_the_second_element_of_a_list()
+        {
+            var numbers = new List<int> {10, 20, 30, 40, 50};
+
+            var result = 0;
+
+            result.Should().Be(20);
+        }
+
+        [Fact]
+        public void take_the_second_element_of_a_list_without_using_Take()
+        {
+            var numbers = new List<int> {10, 20, 30, 40, 50};
+
+            var result = 0;
+
+            result.Should().Be(20);
+        }
+
+        [Fact]
         public void sum_numbers_of_a_list_using_Aggregate()
         {
             var numbers = new List<int> {1, 2, 3, 4, 5};
