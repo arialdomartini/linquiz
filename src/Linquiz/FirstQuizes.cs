@@ -19,6 +19,16 @@ namespace Linquiz
         }
 
         [Fact]
+        public void count_items_using_aggregate()
+        {
+            var list = new List<string> {"foo", "bar", "baz", "qox"};
+
+            var result = 0;
+
+            result.Should().Be(4);
+        }
+
+        [Fact]
         public void convert_strings_to_lowercase()
         {
             var list = new List<string> {"WhiteFox", "TADA", "HHkb"};
@@ -78,7 +88,7 @@ namespace Linquiz
         [Fact]
         public void extract_single_property_from_objects()
         {
-            var people = new List<object>()
+            var people = new List<Person>
             {
                 new Person{Name = "Stefano", Profession = "PM", Age = 45},
                 new Person{Name = "Leo", Profession = "Developer", Age = 30},
@@ -143,7 +153,7 @@ namespace Linquiz
         [Fact]
         public void filter_numbers_whose_value_is_equal_than_its_position_in_the_list()
         {
-            //                           0  1  2  3  4  5  6  6
+            //                           0  1  2  3  4  5  6  7
             var numbers = new List<int> {0, 1, 1, 3, 9, 9, 6, 6};
 
             var result = numbers;
@@ -152,9 +162,9 @@ namespace Linquiz
         }
 
         [Fact]
-        public void associate_position_to_items()
+        public void associate_position_to_items_1_based()
         {
-            var numbers = new List<string> {"one", "two", "three", "four", "five"};
+            var words = new List<string> {"one", "two", "three", "four", "five"};
 
             var result = new List<(string, int)>();
 
@@ -174,7 +184,7 @@ namespace Linquiz
             var words = new List<string> {"zero", "one", "two", "three", "four", "five"};
             var numbers = new List<int> {1, 1, 2, 2, 1, 0, 3, 4, 1, 5};
 
-            var result = words;
+            var result = numbers;
 
             result.Should().BeEquivalentTo(new List<string>
             {
@@ -195,7 +205,7 @@ namespace Linquiz
                 ("five", 5)
             };
 
-            var result = new List<(int, string)>();
+            var result = numbers;
 
             result.Should().BeEquivalentTo(new List<(int, string)>
             {
@@ -208,6 +218,16 @@ namespace Linquiz
         }
 
         [Fact]
+        public void duplicate_list_items_as_pairs()
+        {
+            var numbers = new List<int> {1, 2, 3, 4, 5};
+
+            var result = new List<(int, int)>();
+
+            result.Should().BeEquivalentTo(new List<(int, int)> {(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)});
+        }
+
+        [Fact]
         public void duplicate_list_items()
         {
             var numbers = new List<int> {10, 2, 30, 4, 5};
@@ -215,16 +235,6 @@ namespace Linquiz
             var result = numbers;
 
             result.Should().BeEquivalentTo(new List<int> {10, 10, 2, 2, 30, 30, 4, 4, 5, 5});
-        }
-
-        [Fact]
-        public void duplicate_list_items_as_pairs()
-        {
-            var numbers = new List<int> {1, 2, 3, 4, 5};
-
-            var result = numbers;
-
-            result.Should().BeEquivalentTo(new List<(int, int)> {(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)});
         }
 
         [Fact]
