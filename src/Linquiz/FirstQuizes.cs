@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using FluentAssertions.Collections;
 using Xunit;
 
 namespace Linquiz
@@ -10,23 +9,212 @@ namespace Linquiz
     public class FirstQuizes
     {
         [Fact]
+        public void count_items()
+        {
+            var list = new List<string> {"foo", "bar", "baz", "qox"};
+
+            var result = 0;
+
+            result.Should().Be(4);
+        }
+
+        [Fact]
+        public void convert_strings_to_lowercase()
+        {
+            var list = new List<string> {"WhiteFox", "TADA", "HHkb"};
+
+            var result = list;
+
+            result.Should().BeEquivalentTo(new List<string> {"whitefox", "tada", "hhkb"});
+        }
+
+        [Fact]
+        public void filter_strings_starting_with_the_letter_a()
+        {
+            var list = new List<string> {"amsterdam", "bar", "ametista", "rome", "antelope"};
+
+            var result = list;
+
+            result.Should().BeEquivalentTo(new List<string> {"amsterdam", "ametista", "antelope"});
+        }
+
+        [Fact]
+        public void filter_strings_not_starting_with_the_letter_a()
+        {
+            var list = new List<string> {"amsterdam", "bar", "ametista", "rome", "antelope"};
+
+            var result = list;
+
+            result.Should().BeEquivalentTo(new List<string> {"bar", "rome"});
+        }
+
+        [Fact]
+        public void filter_strings_not_starting_neither_with_the_letter_a_or_the_letter_r()
+        {
+            var list = new List<string> {"amsterdam", "bar", "ametista", "rome", "antelope"};
+
+            var result = list;
+
+            result.Should().BeEquivalentTo(new List<string> {"bar"});
+        }
+
+        [Fact]
+        public void count_strings_starting_with_the_letter_a()
+        {
+            var list = new List<string> {"amsterdam", "bar", "ametista", "rome", "antelope"};
+
+            var result = 0;
+
+            result.Should().Be(3);
+        }
+
+        class Person
+        {
+            public string Name { get; set; }
+            public string Profession { get; set; }
+            public int Age { get; set; }
+        }
+
+        [Fact]
+        public void extract_single_property_from_objects()
+        {
+            var people = new List<object>()
+            {
+                new Person{Name = "Stefano", Profession = "PM", Age = 45},
+                new Person{Name = "Leo", Profession = "Developer", Age = 30},
+                new Person{Name = "Ema", Profession = "Tester", Age = 18}
+            };
+
+            var result = new List<string>();
+
+            result.Should().BeEquivalentTo(new List<string> {"Stefano", "Leo", "Ema"});
+        }
+
+        [Fact]
+        public void calculate_length_of_each_string()
+        {
+            var list = new List<string> {"one", "two", "three", "four"};
+
+            var result = new List<int>();
+
+            result.Should().BeEquivalentTo(new List<int> {3, 3, 5, 4});
+        }
+            
+        [Fact]
+        public void count_the_total_number_of_letters_in_all_the_strings()
+        {
+            var list = new List<string> {"one", "two", "three", "four"};
+
+            var result = 0;
+
+            result.Should().Be(15);
+        }
+
+        [Fact]
+        public void add_1_to_all_numbers()
+        {
+            var numbers = new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+            var result = numbers;
+
+            result.Should().BeEquivalentTo(new List<int> {2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
+        }
+
+        [Fact]
         public void filter_out_odd_numbers()
         {
             var numbers = new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
             var result = numbers;
 
-            result.Should().ContainInOrder(new List<int> {2, 4, 6, 8, 10});
+            result.Should().BeEquivalentTo(new List<int> {2, 4, 6, 8, 10});
+        }
+
+        [Fact]
+        public void count_numbers_smaller_than_5()
+        {
+            var numbers = new List<int> {10, 11, 2, 3, 100, 4, 1, 2};
+
+            var result = 0;
+
+            result.Should().Be(4);
+        }
+
+        [Fact]
+        public void filter_numbers_whose_value_is_equal_than_its_position_in_the_list()
+        {
+            //                           0  1  2  3  4  5  6  6
+            var numbers = new List<int> {0, 1, 1, 3, 9, 9, 6, 6};
+
+            var result = numbers;
+
+            result.Should().BeEquivalentTo(new List<int> {0, 1, 3, 6});
+        }
+
+        [Fact]
+        public void associate_position_to_items()
+        {
+            var numbers = new List<string> {"one", "two", "three", "four", "five"};
+
+            var result = new List<(string, int)>();
+
+            result.Should().BeEquivalentTo(new List<(string, int)>
+            {
+                ("one", 1),
+                ("two", 2),
+                ("three", 3),
+                ("four", 4),
+                ("five", 5)
+            });
+        }
+
+        [Fact]
+        public void convert_numbers_to_words()
+        {
+            var words = new List<string> {"zero", "one", "two", "three", "four", "five"};
+            var numbers = new List<int> {1, 1, 2, 2, 1, 0, 3, 4, 1, 5};
+
+            var result = words;
+
+            result.Should().BeEquivalentTo(new List<string>
+            {
+                "one", "one", "two", "two", "one", "zero", "three", "four", "one", "five"
+            });
+        }
+
+
+        [Fact]
+        public void reverse_items_in_tuples()
+        {
+            var numbers = new List<(string, int)>
+            {
+                ("one", 1),
+                ("two", 2),
+                ("three", 3),
+                ("four", 4),
+                ("five", 5)
+            };
+
+            var result = new List<(int, string)>();
+
+            result.Should().BeEquivalentTo(new List<(int, string)>
+            {
+                (1, "one"),
+                (2, "two"),
+                (3, "three"),
+                (4, "four"),
+                (5, "five")
+            });
         }
 
         [Fact]
         public void duplicate_list_items()
         {
-            var numbers = new List<int> {1, 2, 3, 4, 5};
+            var numbers = new List<int> {10, 2, 30, 4, 5};
 
             var result = numbers;
 
-            result.Should().ContainInOrder(new List<int> {1, 1, 2, 2, 3, 3, 4, 4, 5, 5});
+            result.Should().BeEquivalentTo(new List<int> {10, 10, 2, 2, 30, 30, 4, 4, 5, 5});
         }
 
         [Fact]
@@ -36,7 +224,7 @@ namespace Linquiz
 
             var result = numbers;
 
-            result.Should().ContainInOrder(new List<(int, int)> {(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)});
+            result.Should().BeEquivalentTo(new List<(int, int)> {(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)});
         }
 
         [Fact]
@@ -46,7 +234,7 @@ namespace Linquiz
 
             var result = numbers;
 
-            result.Should().ContainInOrder(new List<int> {1, 2, 3, 4, 5, 1, 2, 3, 4, 5});
+            result.Should().BeEquivalentTo(new List<int> {1, 2, 3, 4, 5, 1, 2, 3, 4, 5});
         }
 
         [Fact]
@@ -56,8 +244,7 @@ namespace Linquiz
 
             var result = numbers;
 
-            StringCollectionAssertions stringCollectionAssertions = result.Should();
-            stringCollectionAssertions.ContainInOrder(new List<string> {"baz", "bar", "foo"});
+            result.Should().ContainInOrder(new List<string> {"baz", "bar", "foo"});
         }
 
         [Fact]
@@ -103,7 +290,7 @@ namespace Linquiz
 
             var result = strings;
 
-            result.Should().ContainInOrder(new List<string>
+            result.Should().BeEquivalentTo(new List<string>
             {
                 "foo",
                 "bar",
@@ -169,7 +356,7 @@ namespace Linquiz
 
             var result = words;
 
-            result.Should().ContainInOrder(new List<string>
+            result.Should().BeEquivalentTo(new List<string>
             {
                 "foo",
                 "bar",
@@ -212,7 +399,7 @@ namespace Linquiz
 
             var result = words;
 
-            result.Should().ContainInOrder(new List<string>
+            result.Should().BeEquivalentTo(new List<string>
             {
                 "oof",
                 "rab",
@@ -288,7 +475,7 @@ namespace Linquiz
 
             var result = words;
 
-            result.Should().ContainInOrder(new List<string>
+            result.Should().BeEquivalentTo(new List<string>
             {
                 "baz",
                 "bar",
@@ -316,7 +503,7 @@ namespace Linquiz
 
             var result = words;
 
-            result.Should().ContainInOrder(new List<string>
+            result.Should().BeEquivalentTo(new List<string>
             {
                 "baz",
                 "foo",
@@ -497,7 +684,7 @@ namespace Linquiz
 
             var result = list1;
 
-            result.Should().ContainInOrder(new List<int> {1, 2, 3, 4, 5, 6, 7});
+            result.Should().BeEquivalentTo(new List<int> {1, 2, 3, 4, 5, 6, 7});
         }
 
         [Fact]
@@ -508,7 +695,7 @@ namespace Linquiz
 
             var result = list1;
 
-            result.Should().ContainInOrder(new List<int> {1, 2, 3, 4, 5, 6});
+            result.Should().BeEquivalentTo(new List<int> {1, 2, 3, 4, 5, 6});
         }
 
         [Fact]
@@ -519,7 +706,7 @@ namespace Linquiz
 
             var result = list1;
 
-            result.Should().ContainInOrder(new List<int> { 5, 2, 3, 17, 19});
+            result.Should().BeEquivalentTo(new List<int> { 5, 2, 3, 17, 19});
         }
 
         [Fact]
@@ -530,7 +717,7 @@ namespace Linquiz
 
             var result = list1;
 
-            result.Should().ContainInOrder(new List<int> { 100, 200});
+            result.Should().BeEquivalentTo(new List<int> { 100, 200});
         }
 
         [Fact]
