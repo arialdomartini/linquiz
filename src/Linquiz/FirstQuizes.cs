@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Xunit;
 
 namespace Linquiz
@@ -9,420 +6,506 @@ namespace Linquiz
     public class FirstQuizes
     {
         [Fact]
-        public void count_items()
+        void count_items()
         {
-            var list = new List<string> {"foo", "bar", "baz", "qox"};
+            string[] words = ["foo", "bar", "baz", "qox"];
 
-            var result = 0;
+            var numberOfWords = 0;
 
-            result.Should().Be(4);
+            Assert.Equal(4, numberOfWords);
         }
 
         [Fact]
-        public void count_items_using_aggregate()
+        void count_items_using_aggregate()
         {
-            var list = new List<string> {"foo", "bar", "baz", "qox"};
+            string[] words = ["foo", "bar", "baz", "qox"];
 
-            var result = 0;
+            var numberOfWords = 0;
 
-            result.Should().Be(4);
+            Assert.Equal(4, numberOfWords);
         }
 
         [Fact]
-        public void convert_strings_to_lowercase()
+        void convert_words_to_lowercase()
         {
-            var list = new List<string> {"WhiteFox", "TADA", "HHkb"};
+            string[] words = ["WhiteFox", "TADA", "HHkb", "Corne-ish"];
 
-            var result = list;
+            var lowerCaseWords = words;
 
-            result.Should().BeEquivalentTo(new List<string> {"whitefox", "tada", "hhkb"});
+            Assert.Equal(
+                (string[]) ["whitefox", "tada", "hhkb", "corne-ish"],
+                lowerCaseWords);
         }
 
         [Fact]
-        public void filter_strings_starting_with_the_letter_a()
+        void select_only_the_strings_starting_with_the_letter_a()
         {
-            var list = new List<string> {"amsterdam", "bar", "ametista", "rome", "antelope"};
+            string[] words = ["amsterdam", "bar", "ametista", "rome", "antelope"];
 
-            var result = list;
+            var wordsStartingWithLetterA = words;
 
-            result.Should().BeEquivalentTo(new List<string> {"amsterdam", "ametista", "antelope"});
+            Assert.Equal(
+                (string[]) ["amsterdam", "ametista", "antelope"],
+                wordsStartingWithLetterA);
+        }
+
+        // TODO get both: starting and not starting
+        // TODO group by initial letter
+        [Fact]
+        void filter_out_the_strings_starting_with_the_letter_a()
+        {
+            string[] words = ["amsterdam", "bar", "ametista", "rome", "antelope"];
+
+            var wordsNotStartingWithLetterA = words;
+
+            Assert.Equal(
+                (string[]) ["bar", "rome"],
+                wordsNotStartingWithLetterA);
         }
 
         [Fact]
-        public void filter_strings_not_starting_with_the_letter_a()
+        void filter_out_the_strings_starting_with_either_the_letter_a_or_with_the_letter_r()
         {
-            var list = new List<string> {"amsterdam", "bar", "ametista", "rome", "antelope"};
+            string[] words = ["amsterdam", "bar", "ametista", "rome", "antelope"];
 
-            var result = list;
+            var wordsNotStartingWithLettersANorR = words;
 
-            result.Should().BeEquivalentTo(new List<string> {"bar", "rome"});
+            Assert.Equal(
+                (string[]) ["bar"],
+                wordsNotStartingWithLettersANorR);
         }
 
         [Fact]
-        public void filter_strings_not_starting_neither_with_the_letter_a_or_the_letter_r()
+        void count_strings_starting_with_the_letter_a()
         {
-            var list = new List<string> {"amsterdam", "bar", "ametista", "rome", "antelope"};
+            string[] words = ["amsterdam", "bar", "ametista", "rome", "antelope"];
 
-            var result = list;
+            var numberOfWordsStartingWithLetterA = 0;
 
-            result.Should().BeEquivalentTo(new List<string> {"bar"});
+            Assert.Equal(3, numberOfWordsStartingWithLetterA);
+        }
+
+        record Person(string Name, string Profession, int Age);
+
+        [Fact]
+        void extract_a_single_property_from_objects()
+        {
+            Person[] people =
+            [
+                new Person(Name: "Shansai", Profession: "Developer", Age: 17),
+                new Person(Name: "Emanuele", Profession: "PowerPoint Architect", Age: 45),
+                new Person(Name: "Protesilaos", Profession: "Developer", Age: 40),
+            ];
+
+            string[] names = [];
+
+            Assert.Equal(
+                (string[]) ["Shansai", "Emanuele", "Protesilaos"],
+                names);
         }
 
         [Fact]
-        public void count_strings_starting_with_the_letter_a()
+        void calculate_length_of_each_word()
         {
-            var list = new List<string> {"amsterdam", "bar", "ametista", "rome", "antelope"};
+            string[] words = ["one", "two", "three", "four"];
 
-            var result = 0;
+            int[] lengths = [];
 
-            result.Should().Be(3);
-        }
-
-        class Person
-        {
-            public string Name { get; set; }
-            public string Profession { get; set; }
-            public int Age { get; set; }
+            Assert.Equal(
+                (int[]) [3, 3, 5, 4],
+                lengths);
         }
 
         [Fact]
-        public void extract_single_property_from_objects()
+        void count_the_total_number_of_letters_in_all_the_words()
         {
-            var people = new List<Person>
-            {
-                new Person{Name = "Stefano", Profession = "PM", Age = 45},
-                new Person{Name = "Leo", Profession = "Developer", Age = 30},
-                new Person{Name = "Ema", Profession = "Tester", Age = 18}
-            };
+            string[] words = ["one", "two", "three", "four"];
 
-            var result = new List<string>();
+            var totalNumberOfLetters = 0;
 
-            result.Should().BeEquivalentTo(new List<string> {"Stefano", "Leo", "Ema"});
+            Assert.Equal(15, totalNumberOfLetters);
         }
 
         [Fact]
-        public void calculate_length_of_each_string()
+        void count_the_total_number_of_letters_in_all_the_sentences_excluding_the_spaces()
         {
-            var list = new List<string> {"one", "two", "three", "four"};
+            string[] words = ["one yes", "two no", "three maybe", "four"];
 
-            var result = new List<int>();
+            var totalNumberOfLetters = 0;
 
-            result.Should().BeEquivalentTo(new List<int> {3, 3, 5, 4});
-        }
-            
-        [Fact]
-        public void count_the_total_number_of_letters_in_all_the_strings()
-        {
-            var list = new List<string> {"one", "two", "three", "four"};
-
-            var result = 0;
-
-            result.Should().Be(15);
+            Assert.Equal(25, totalNumberOfLetters);
         }
 
         [Fact]
-        public void add_1_to_all_numbers()
+        void filter_out_odd_numbers()
         {
-            var numbers = new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+            int[] numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+            int[] evenNumbers = [];
+
+            Assert.Equal(
+                (int[]) [2, 4, 6, 8, 10],
+                evenNumbers);
+        }
+
+        [Fact]
+        void count_numbers_smaller_than_5()
+        {
+            int[] numbers = [10, 11, 2, 3, 100, 4, 1, 2];
+
+            var numberOfNumbersSmallerThan5 = 0;
+
+            Assert.Equal(4, numberOfNumbersSmallerThan5);
+        }
+
+        [Fact]
+        void count_even_numbers_smaller_than_5()
+        {
+            int[] numbers = [10, 11, 2, 3, 100, 4, 1, 2];
+
+            var numberOfEvenNumbersSmallerThan5 = 0;
+
+            Assert.Equal(3, numberOfEvenNumbersSmallerThan5);
+        }
+
+        [Fact]
+        void select_only_the_numbers_whose_value_is_equal_to_their_position_in_the_list()
+        {
+            //               0  1  2  3  4  5  6  7
+            int[] numbers = [0, 1, 1, 3, 9, 9, 6, 6];
 
             var result = numbers;
 
-            result.Should().BeEquivalentTo(new List<int> {2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
+            Assert.Equal(
+                (int[]) [0, 1, 3, 6],
+                result);
         }
 
         [Fact]
-        public void filter_out_odd_numbers()
+        void associate_each_items_with_its_1_based_position()
         {
-            var numbers = new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+            string[] words = ["one", "two", "three", "four", "five"];
 
-            var result = numbers;
+            (string, int)[] itemsAndPositions = [];
 
-            result.Should().BeEquivalentTo(new List<int> {2, 4, 6, 8, 10});
+            Assert.Equal(
+                ((string, int)[])
+                [
+                    ("one", 1),
+                    ("two", 2),
+                    ("three", 3),
+                    ("four", 4),
+                    ("five", 5)
+                ],
+                itemsAndPositions
+            );
         }
 
         [Fact]
-        public void count_numbers_smaller_than_5()
+        void convert_numbers_to_words()
         {
-            var numbers = new List<int> {10, 11, 2, 3, 100, 4, 1, 2};
+            string[] words = ["zero", "one", "two", "three", "four", "five"];
 
-            var result = 0;
+            int[] numbers = [];
 
-            result.Should().Be(4);
+            Assert.Equal(
+                (int[]) [1, 1, 2, 2, 1, 0, 3, 4, 1, 5],
+                numbers);
         }
 
         [Fact]
-        public void filter_numbers_whose_value_is_equal_than_its_position_in_the_list()
+        void swap_items_in_tuples()
         {
-            //                           0  1  2  3  4  5  6  7
-            var numbers = new List<int> {0, 1, 1, 3, 9, 9, 6, 6};
-
-            var result = numbers;
-
-            result.Should().BeEquivalentTo(new List<int> {0, 1, 3, 6});
-        }
-
-        [Fact]
-        public void associate_position_to_items_1_based()
-        {
-            var words = new List<string> {"one", "two", "three", "four", "five"};
-
-            var result = new List<(string, int)>();
-
-            result.Should().BeEquivalentTo(new List<(string, int)>
-            {
+            (string, int)[] numbers =
+            [
                 ("one", 1),
                 ("two", 2),
                 ("three", 3),
                 ("four", 4),
                 ("five", 5)
-            });
+            ];
+
+            (int, string)[] swappedTuples = [];
+
+            Assert.Equal(
+                ((int, string)[])
+                [
+                    (1, "one"),
+                    (2, "two"),
+                    (3, "three"),
+                    (4, "four"),
+                    (5, "five")
+                ],
+                swappedTuples
+            );
         }
 
         [Fact]
-        public void convert_numbers_to_words()
+        void duplicate_list_items_as_pairs()
         {
-            var words = new List<string> {"zero", "one", "two", "three", "four", "five"};
-            var numbers = new List<int> {1, 1, 2, 2, 1, 0, 3, 4, 1, 5};
+            int[] numbers = [1, 2, 3, 4, 5];
 
-            var result = numbers;
+            (int, int)[] duplicatedPairs = [];
 
-            result.Should().BeEquivalentTo(new List<string>
+            Assert.Equal(
+                ((int, int)[]) [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)],
+                duplicatedPairs);
+        }
+
+        [Fact]
+        void duplicate_list_items()
+        {
+            int[] numbers = [10, 2, 30, 4, 5];
+
+            int[] duplicatedElements = [];
+
+            Assert.Equal(
+                (int[]) [10, 10, 2, 2, 30, 30, 4, 4, 5, 5],
+                duplicatedElements);
+        }
+
+        [Fact]
+        void duplicate_a_list()
+        {
+            int[] numbers = [1, 2, 3, 4, 5];
+
+            int[] duplicatedList = [];
+
+            Assert.Equal(
+                (int[]) [1, 2, 3, 4, 5, 1, 2, 3, 4, 5],
+                duplicatedList);
+        }
+
+        [Fact]
+        void reverse_a_list()
+        {
+            string[] words = ["foo", "bar", "baz"];
+
+            string[] wordsInReversedOrder = [];
+
+            Assert.Equal(
+                (string[]) ["baz", "bar", "foo"],
+                wordsInReversedOrder);
+        }
+
+        [Fact]
+        void reverse_a_list_using_aggregate()
+        {
+            string[] words = ["foo", "bar", "baz"];
+
+            string[] wordsInReversedOrder = [];
+
+            Assert.Equal(
+                (string[]) ["baz", "bar", "foo"],
+                wordsInReversedOrder);
+        }
+
+        [Fact]
+        void randomly_shuffle_a_list()
+        {
+            int[] numbers = Enumerable.Range(1, 1000).ToArray();
+
+            IEnumerable<int> Shuffle(IEnumerable<int> xs) => [];
+
+            var tenResultsOfShuffling
+                = Enumerable.Range(0, 10)
+                    .Select(_ => Shuffle(numbers.ToArray()))
+                    .ToArray();
+
+            // Each result is a shuffle of the original list
+            foreach (var singleShuffledResult in tenResultsOfShuffling)
             {
-                "one", "one", "two", "two", "one", "zero", "three", "four", "one", "five"
-            });
-        }
-
-
-        [Fact]
-        public void reverse_items_in_tuples()
-        {
-            var numbers = new List<(string, int)>
-            {
-                ("one", 1),
-                ("two", 2),
-                ("three", 3),
-                ("four", 4),
-                ("five", 5)
-            };
-
-            var result = numbers;
-
-            result.Should().BeEquivalentTo(new List<(int, string)>
-            {
-                (1, "one"),
-                (2, "two"),
-                (3, "three"),
-                (4, "four"),
-                (5, "five")
-            });
-        }
-
-        [Fact]
-        public void duplicate_list_items_as_pairs()
-        {
-            var numbers = new List<int> {1, 2, 3, 4, 5};
-
-            var result = new List<(int, int)>();
-
-            result.Should().BeEquivalentTo(new List<(int, int)> {(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)});
-        }
-
-        [Fact]
-        public void duplicate_list_items()
-        {
-            var numbers = new List<int> {10, 2, 30, 4, 5};
-
-            var result = numbers;
-
-            result.Should().BeEquivalentTo(new List<int> {10, 10, 2, 2, 30, 30, 4, 4, 5, 5});
-        }
-
-        [Fact]
-        public void duplicate_a_list()
-        {
-            var numbers = new List<int> {1, 2, 3, 4, 5};
-
-            var result = numbers;
-
-            result.Should().BeEquivalentTo(new List<int> {1, 2, 3, 4, 5, 1, 2, 3, 4, 5});
-        }
-
-        [Fact]
-        public void reverse_a_list()
-        {
-            var numbers = new List<string> {"foo", "bar", "baz"};
-
-            var result = numbers;
-
-            result.Should().ContainInOrder(new List<string> {"baz", "bar", "foo"});
-        }
-
-        [Fact]
-        public void randomly_shuffle_a_list()
-        {
-            var numbers = new List<int> {1, 2, 3, 4, 5};
-
-            IEnumerable<int> Shuffle(IEnumerable<int> list)
-            {
-                // Implement here
-                return list;
+                AssertIsShuffled(singleShuffledResult.ToArray());
             }
 
-            var results = Enumerable.Range(0, 100)
-                .Select(i => Shuffle(numbers))
-                .Distinct()
-                .ToList();
+            // We got 10 different results
+            var asString = tenResultsOfShuffling.Select(list => string.Join("-", list)).ToArray();
+            Assert.True(asString.Distinct().Count() == 10, $"Expected 10 different results but got {asString.Distinct().Count()}");
 
-            results.Count.Should().BeGreaterThan(1);
+            void AssertIsShuffled(int[] shuffledNumbers)
+            {
+                Assert.True(numbers.Length == shuffledNumbers.Length, "Not the same length");
 
-            results.ForEach(r => r.Should().BeEquivalentTo(numbers));
+                foreach (var shuffledNumber in shuffledNumbers)
+                {
+                    Assert.True(numbers.Contains(shuffledNumber), $"It does not contain the number {shuffledNumber}");
+                }
+            }
         }
 
         [Fact]
-        public void sum_numbers_of_a_list()
+        void take_the_first_element_of_a_list()
         {
-            var numbers = new List<int> {1, 2, 3, 4, 5};
+            int[] numbers = [10, 20, 30, 40, 50];
 
-            var result = 0;
+            var firstElement = 0;
 
-            result.Should().Be(15);
+            Assert.Equal(10, firstElement);
         }
 
         [Fact]
-        public void trim_strings()
+        void take_the_first_element_of_a_list_without_using_First()
         {
-            var strings = new List<string>
-            {
-                " foo  ",
-                "bar  ",
-                "  baz"
-            };
+            int[] numbers = [10, 20, 30, 40, 50];
 
-            var result = strings;
+            var firstElement = 0;
 
-            result.Should().BeEquivalentTo(new List<string>
-            {
+            Assert.Equal(10, firstElement);
+        }
+
+
+        [Fact]
+        void take_the_first_element_of_a_list_using_Aggregate()
+        {
+            int[] numbers = [10, 20, 30, 40, 50];
+
+            var firstElement = 0;
+
+            Assert.Equal(10, firstElement);
+        }
+
+        [Fact]
+        void take_the_second_element_of_a_list_using_Aggregate()
+        {
+            int[] numbers = [10, 20, 30, 40, 50];
+
+            var secondElement = 0;
+
+            Assert.Equal(20, secondElement);
+        }
+
+        [Fact]
+        void sum_numbers_of_a_list_using_Aggregate()
+        {
+            int[] numbers = [1, 2, 3, 4, 5];
+
+            var sum = 0;
+
+            Assert.Equal(1 + 2 + 3 + 4 + 5, sum);
+        }
+
+        [Fact]
+        void remove_blacklisted_items()
+        {
+            string[] words =
+            [
+                "monads",
+                "functors",
+                "side effects",
+                "currying",
+                "duplication",
+                "duplication",
+                "mutability"
+            ];
+
+            string[] forbiddenWords =
+            [
+                "mutability",
+                "side effects",
+                "duplication"
+            ];
+
+            string[] withoutForbiddenWords = [];
+
+            Assert.Equal(
+                (string[])
+                [
+                    "monads",
+                    "functors",
+                    "currying",
+                ],
+                withoutForbiddenWords);
+        }
+
+        [Fact]
+        void intersections_of_sets()
+        {
+            string[] allTheTopics =
+            [
+                "y-combinator",
+                "monads",
+                "functors",
+                "currying",
+                "yoneda lemma"
+            ];
+
+            string[] hardTopics =
+            [
+                "yoneda lemma",
+                "monads",
+                "y-combinator",
+                "being punctual"
+            ];
+
+            string[] intersection = [];
+
+            Assert.Equal(
+                (string[])
+                [
+                    "monads",
+                    "yoneda lemma",
+                    "y-combinator",
+                ],
+                intersection);
+        }
+
+        [Fact]
+        void concatenate_strings_skipping_blacklisted_words()
+        {
+            string[] words =
+            [
+                "monads",
+                "functors",
+                "side effects",
+                "currying",
+                "duplication",
+                "duplication",
+                "mutability"
+            ];
+
+            string[] forbiddenWords =
+            [
+                "mutability",
+                "side effects",
+                "duplication"
+            ];
+
+            string allTheGoodWords = "";
+
+            Assert.Equal(
+                "monads, functors, currying",
+                allTheGoodWords);
+        }
+
+        [Fact]
+        void reverse_words_in_a_list()
+        {
+            string[] words =
+            [
                 "foo",
                 "bar",
-                "baz"
-            });
-        }
-
-        [Fact]
-        public void take_the_first_element_of_a_list()
-        {
-            var numbers = new List<int> {10, 20, 30, 40, 50};
-
-            var result = 0;
-
-            result.Should().Be(10);
-        }
-
-        [Fact]
-        public void take_the_second_element_of_a_list()
-        {
-            var numbers = new List<int> {10, 20, 30, 40, 50};
-
-            var result = 0;
-
-            result.Should().Be(20);
-        }
-
-        [Fact]
-        public void take_the_second_element_of_a_list_without_using_Take()
-        {
-            var numbers = new List<int> {10, 20, 30, 40, 50};
-
-            var result = 0;
-
-            result.Should().Be(20);
-        }
-
-        [Fact]
-        public void sum_numbers_of_a_list_using_Aggregate()
-        {
-            var numbers = new List<int> {1, 2, 3, 4, 5};
-
-            var result = 0;
-
-            result.Should().Be(15);
-        }
-
-        [Fact]
-        public void remove_blacklisted_items()
-        {
-            var words = new List<string>
-            {
-                "foo",
-                "bar",
-                "forbidden",
                 "baz",
-                "skipme",
                 "qux"
-            };
+            ];
 
-            var forbiddenWords = new List<string>
-                {"skipme", "forbidden"};
+            string[] reversedWords = [];
 
-            var result = words;
-
-            result.Should().BeEquivalentTo(new List<string>
-            {
-                "foo",
-                "bar",
-                "baz",
-                "qux"
-            });
+            Assert.Equal(
+                (string[])
+                [
+                    "oof",
+                    "rab",
+                    "zab",
+                    "xuq"
+                ],
+                reversedWords);
         }
 
         [Fact]
-        public void concatenate_strings_skipping_blacklisted_words()
+        void count_word_occurrences()
         {
-            var words = new List<string>
-            {
-                "foo",
-                "bar",
-                "forbidden",
-                "baz",
-                "skipme",
-                "qux"
-            };
-
-            var forbiddenWords = new List<string>
-                {"skipme", "forbidden"};
-
-            var result = "";
-
-            result.Should().Be("foobarbazqux");
-        }
-
-        [Fact]
-        public void reverse_words_in_a_list()
-        {
-            var words = new List<string>
-            {
-                "foo",
-                "bar",
-                "baz",
-                "qux"
-            };
-
-            var result = words;
-
-            result.Should().BeEquivalentTo(new List<string>
-            {
-                "oof",
-                "rab",
-                "zab",
-                "xuq"
-            });
-        }
-
-        [Fact]
-        public void count_word_occourrences()
-        {
-            var words = new List<string>
-            {
+            string[] words =
+            [
                 "baz",
                 "foo",
                 "bar",
@@ -430,24 +513,26 @@ namespace Linquiz
                 "foo",
                 "foo",
                 "qux"
-            };
+            ];
 
-            var result = new Dictionary<string, int>();
+            Dictionary<string, int> occurrences = new();
 
-            result.Should().BeEquivalentTo(new Dictionary<string, int>
-            {
-                {"foo", 3},
-                {"bar", 1},
-                {"baz", 2},
-                {"qux", 1}
-            });
+            Assert.Equal(
+                new Dictionary<string, int>
+                {
+                    { "foo", 3 },
+                    { "bar", 1 },
+                    { "baz", 2 },
+                    { "qux", 1 }
+                },
+                occurrences);
         }
 
         [Fact]
-        public void count_word_occourrences_removing_words_that_appears_only_once()
+        void count_word_occurrences_removing_words_that_appears_only_once()
         {
-            var words = new List<string>
-            {
+            string[] words =
+            [
                 "baz",
                 "foo",
                 "bar",
@@ -456,152 +541,153 @@ namespace Linquiz
                 "foo",
                 "qux",
                 "qux"
-            };
+            ];
 
-            var result = new Dictionary<string, int>();
+            Dictionary<string, int> occurrencesWithoutSingletons = new();
 
-            result.Should().BeEquivalentTo(new Dictionary<string, int>
-            {
-                {"foo", 3},
-                // {"bar", 1},  // removed, as it appears only once
-                {"baz", 2},
-                {"qux", 2}
-            });
+            Assert.Equal(
+                new Dictionary<string, int>
+                {
+                    { "foo", 3 },
+                    // { "bar", 1 },  // removed, as it appears only once
+                    { "baz", 2 },
+                    { "qux", 1 }
+                },
+                occurrencesWithoutSingletons);
         }
 
         [Fact]
-        public void only_keep_items_that_have_less_than_2_occourrences()
+        void only_keep_items_that_have_less_than_2_occurrences()
         {
-            var words = new List<string>
-            {
+            string[] words =
+            [
                 "baz",
                 "foo",
                 "bar",
                 "baz",
                 "foo",
-                "foo", // There are 3 occourrences of "foo". Remove all of them
+                "foo", // There are 3 occurrences of "foo". Remove all of them
                 "qux"
-            };
+            ];
 
-            var result = words;
+            string[] wordsWithoutInfrequentOnes = [];
 
-            result.Should().BeEquivalentTo(new List<string>
-            {
-                "baz",
-                "bar",
-                "baz",
-                "qux"
-            });
+            Assert.Equal(
+                (string[])
+                [
+                    "baz",
+                    "bar",
+                    "baz",
+                    "qux"
+                ],
+                wordsWithoutInfrequentOnes);
         }
 
         [Fact]
-        public void only_keep_up_to_2_occourrences_of_an_item()
+        void only_keep_up_to_2_occurrences_of_an_item()
         {
-            var words = new List<string>
-            {
+            string[] words =
+            [
                 "baz",
                 "foo",
                 "bar",
                 "baz",
                 "foo",
-                "foo", // This is the 3rd "foo" occourrences. Remove it
+                "foo", // This is the 3rd "foo" occurrences. Remove it
                 "qux",
                 "qux",
                 "qux", // 3rd and
-                "qux" // 4th occourrences of "qux" must be removed
-            };
+                "qux" // 4th occurrences of "qux" must be removed
+            ];
 
-            var result = words;
+            string[] wordsWithMax2Occurrences = [];
 
-            result.Should().BeEquivalentTo(new List<string>
-            {
-                "baz",
-                "foo",
-                "bar",
-                "baz",
-                "foo",
-                // "foo",
-                "qux",
-                "qux",
-                // "qux",
-                // "qux"
-            });
+            Assert.Equal(
+                (string[])
+                [
+                    "baz",
+                    "foo",
+                    "bar",
+                    "baz",
+                    "foo",
+                    // "foo",
+                    "qux",
+                    "qux",
+                    // "qux",
+                    // "qux"
+                ],
+                wordsWithMax2Occurrences);
         }
 
         [Fact]
-        public void zip_lists()
+        void zip_lists()
         {
-            var people = new List<string>
-            {
-                "Stefano",
-                "Leo",
-                "Ale",
-            };
+            string[] people =
+            [
+                "Thierry",
+                "Arialdo",
+                "Emanuele",
+            ];
 
-            var drinks = new List<string>()
-            {
+            string[] drinks =
+            [
                 "water",
                 "Martini dry",
-                "vodka"
-            };
+                "water"
+            ];
 
             var result = people;
 
-            result.Should().BeEquivalentTo(new List<string>
-            {
-                "Stefano drinks water",
-                "Leo drinks Martini dry",
-                "Ale drinks vodka"
-            });
+            Assert.Equal(
+                (string[])
+                [
+                    "Thierry drinks water",
+                    "Arialdo drinks Martini dry",
+                    "Emanuele drinks water"
+                ],
+                result);
         }
 
         [Fact]
-        public void multiply_numbers_from_2_lists()
+        void multiply_numbers_from_2_lists()
         {
-            var numbers1 = new List<int> {2, 3, 4};
-            var numbers2 = new List<int> {10, 100, 1000};
+            int[] numbers1 = [2, 3, 4];
+            int[] numbers2 = [10, 100, 1000];
 
-            var result = numbers1;
+            int[] products = [];
 
-            result.Should().BeEquivalentTo(new List<int> {20, 300, 4000});
+            Assert.Equal(
+                (int[])
+                [
+                    2 * 10,
+                    3 * 100,
+                    4 * 100
+                ],
+                products);
         }
 
         [Fact]
-        public void calculate_squares()
+        void find_all_possible_couples()
         {
-            var numbers = new List<int> {2, 3, 4};
+            int[] numbers = [1, 2, 3];
 
-            var result = numbers;
+            (int, int)[] allPossibleCouples = [];
 
-            result.Should().BeEquivalentTo(new List<int> {4, 9, 16});
-        }
+            Assert.Equal(((int, int)[])
+                [
+                    (1, 1),
+                    (1, 2),
+                    (1, 3),
 
-        [Fact]
-        public void find_all_possible_couples()
-        {
-            var words = new List<int>
-            {
-                1,
-                2,
-                3
-            };
+                    (2, 1),
+                    (2, 2),
+                    (2, 3),
 
-            var result = new List< (int, int) >();
-
-            result.Should().BeEquivalentTo(new List< (int, int) >
-            {
-                (1, 1),
-                (1, 2),
-                (1, 3),
-
-                (2, 1),
-                (2, 2),
-                (2, 3),
-
-                (3, 1),
-                (3, 2),
-                (3, 3)
-            });
+                    (3, 1),
+                    (3, 2),
+                    (3, 3)
+                ],
+                allPossibleCouples);
         }
 
         [Theory]
@@ -616,68 +702,60 @@ namespace Linquiz
         [InlineData(9, false)]
         [InlineData(14, false)]
         [InlineData(17, true)]
-        public void check_if_a_number_is_prime(int number, bool expected)
+        void check_if_a_number_is_prime(int number, bool expected)
         {
-            bool IsPrime(int n)
-            {
-                // implement here with LINQ
-                throw new NotImplementedException(); 
-            }
+            bool IsPrime(int n) => false;
 
-            IsPrime(number).Should().Be(expected);
+            Assert.Equal(expected, IsPrime(number));
         }
 
         [Fact]
-        public void check_if_list_contains_at_least_one_item_satisfying_a_property()
+        // Reimplement Any
+        void check_if_list_contains_at_least_one_item_satisfying_a_property()
         {
-            var a = new List<int> {1, 2, 3};
-            var b = new List<int> {1, 3, 5};
+            int[] a = [1, 2, 3];
+            int[] b = [1, 3, 5];
 
-            bool ContainsAtLeastAnEvenNumber(IEnumerable<int> list)
-            {
-                // implement here with LINQ
-                throw new NotImplementedException();
-            }
+            bool ContainsAtLeastAnEvenNumber(IEnumerable<int> numbers) =>
+                false;
 
-            ContainsAtLeastAnEvenNumber(a).Should().Be(true);
-            ContainsAtLeastAnEvenNumber(b).Should().Be(false);
+            Assert.True(ContainsAtLeastAnEvenNumber(a));
+            Assert.False(ContainsAtLeastAnEvenNumber(b));
         }
 
         [Fact]
-        public void check_if_list_contains_only_items_satisfying_a_property()
+        // Reimplement All
+        void check_if_list_contains_only_items_satisfying_a_property()
         {
-            var a = new List<int> {2, 4, 6};
-            var b = new List<int> {1, 3, 5};
+            int[] a = [2, 4, 6];
+            int[] b = [1, 3, 5];
 
-            bool ContainsOnlyEvenNumbers(IEnumerable<int> list)
-            {
-                // implement here with LINQ
-                throw new NotImplementedException();
-            }
+            bool ContainsOnlyEvenNumbers(IEnumerable<int> list) =>
+                false;
 
-            ContainsOnlyEvenNumbers(a).Should().Be(true);
-            ContainsOnlyEvenNumbers(b).Should().Be(false);
+            Assert.True(ContainsOnlyEvenNumbers(a));
+            Assert.False(ContainsOnlyEvenNumbers(b));
         }
 
         [Fact]
-        public void check_if_all_the_items_satisfy_all_the_required_properties()
+        // Implement an improved All
+        void check_if_all_the_items_satisfy_all_the_required_properties()
         {
-            var a = new List<int> {2, 4, 8};
-            var b = new List<int> {1, 4, 8};
-            var c = new List<int> {2, 4, 500};
-            var d = new List<int> {2, 6, 8};
+            int[] a = [2, 4, 8];
+            int[] b = [1, 4, 8];
+            int[] c = [2, 4, 500];
+            int[] d = [2, 6, 8];
 
             var rules = new Dictionary<string, Func<int, bool>>
             {
-                {"is even", n => n % 2 == 0},
-                {"is not 6", n => n != 6},
-                {"is smaller than 100", n => n < 100}
+                { "is even", n => n % 2 == 0 },
+                { "is not 6", n => n != 6 },
+                { "is smaller than 100", n => n < 100 }
             };
 
             bool SatisfiesAllTheRules(IEnumerable<int> list)
             {
-                // implement here with LINQ
-                throw new NotImplementedException(); 
+                return false;
             }
 
             SatisfiesAllTheRules(a).Should().Be(true);
@@ -687,79 +765,255 @@ namespace Linquiz
         }
 
         [Fact]
-        public void concatenate_lists()
+        void concatenate_lists()
         {
-            var list1 = new List<int> {1, 2, 3, 4};
-            var list2 = new List<int> {5, 6, 7};
+            int[] left = [1, 2, 3, 4];
+            int[] right = [5, 6, 7];
 
-            var result = list1;
+            int[] concatenationOfLeftAndRight = [];
 
-            result.Should().BeEquivalentTo(new List<int> {1, 2, 3, 4, 5, 6, 7});
+            Assert.Equal(
+                (int[]) [1, 2, 3, 4, 5, 6, 7],
+                concatenationOfLeftAndRight);
         }
 
         [Fact]
-        public void interleave_2_lists_items()
+        void interleave_2_lists_items()
         {
-            var list1 = new List<int> {1, 3, 5};
-            var list2 = new List<int> {2, 4, 6};
+            int[] list1 = [1, 3, 5];
+            int[] list2 = [2, 4, 6];
 
-            var result = list1;
+            int[] interleavead = [];
 
-            result.Should().BeEquivalentTo(new List<int> {1, 2, 3, 4, 5, 6});
+            Assert.Equal(
+                (int[]) [1, 2, 3, 4, 5, 6],
+                interleavead);
         }
 
         [Fact]
-        public void keep_only_matching_part_of_two_list()
+        void keep_only_matching_part_of_two_list()
         {
-            var list1 = new List<int> { 5, 2, 3, 17, 19, 100, 200};
-            var list2 = new List<int> { 5, 2, 3, 17, 19, 888, 300, 100};
+            int[] list1 = [5, 2, 3, 17, 19, 100, 200];
+            int[] list2 = [5, 2, 3, 17, 19, 888, 300, 100];
 
-            var result = list1;
+            int[] matchingPart = [];
 
-            result.Should().BeEquivalentTo(new List<int> { 5, 2, 3, 17, 19});
+            Assert.Equal(
+                (int[]) [5, 2, 3, 17, 19],
+                matchingPart);
         }
 
         [Fact]
-        public void collect_the_non_matching_items_from_the_first_list()
+        void collect_the_non_matching_items_from_the_first_list()
         {
-            var list1 = new List<int> { 5, 2, 3, 17, 19, 100, 200};
-            var list2 = new List<int> { 5, 2, 3, 17, 19, 888, 300, 100};
+            int[] list1 = [5, 2, 3, 17, 19, 100, 200];
+            int[] list2 = [5, 2, 3, 17, 19, 888, 300, 100];
 
-            var result = list1;
+            int[] nonMatchingPart = [];
 
-            result.Should().BeEquivalentTo(new List<int> { 100, 200});
+            Assert.Equal(
+                (int[]) [100, 200],
+                nonMatchingPart);
         }
 
         [Fact]
-        public void collect_the_non_matching_items_from_all_the_lists()
+        void collect_the_non_matching_items_from_all_the_lists()
         {
-            var list1 = new List<int> { 5, 2, 3, 17, 19, 100, 200};
-            var list2 = new List<int> { 5, 2, 3, 17, 19, 888, 300, 100};
+            int[] list1 = [5, 2, 3, 17, 19, 100, 200];
+            int[] list2 = [5, 2, 3, 17, 19, 888, 300, 100];
 
-            var result = list1;
+            int[] allTheNonMatchingElements = [];
 
-            result.Should().ContainInOrder(new List<int> { 100, 200, 888, 300, 100});
+            Assert.Equal(
+                (int[]) [100, 200, 888, 300, 100],
+                allTheNonMatchingElements);
         }
 
         [Fact]
-        public void find_the_last_matching_item_in_2_lists()
+        void find_the_last_matching_item_in_2_lists()
         {
-            var list1 = new List<int> { 5, 2, 3, 17, 19, 100, 200};
-            var list2 = new List<int> { 5, 2, 3, 17, 19, 888, 300, 100};
+            int[] list1 = [5, 2, 3, 17, 19, 100, 200];
+            int[] list2 = [5, 2, 3, 17, 19, 888, 300, 100];
 
-            var result = 0;
+            var lastMatchingElement = 0;
 
-            result.Should().Be(19);
+            Assert.Equal(19, lastMatchingElement);
         }
 
         [Fact]
-        public void take_the_central_element_of_a_list_with_an_odd_number_of_items()
+        void take_the_central_element_of_a_list_with_an_odd_number_of_items()
         {
-            var list = new List<int> { 5, 2, 3, 17, 19, 100, 200};
+            int[] list = [ 5, 2, 3, 17, 19, 100, 200 ];
 
-            var result = 0;
+            int median = 0;
 
-            result.Should().Be(17);
+            Assert.Equal(17, median);
+        }
+
+        [Fact]
+        void split_odd_and_even_numbers()
+        {
+            int[] numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+            (int[], int[]) splitNumbers = ([], []);
+
+            Assert.Equal(
+                (
+                    (int[]) [1, 3, 5, 7, 9],
+                    (int[]) [2, 4, 6, 8, 10]),
+                splitNumbers);
+        }
+
+        [Fact]
+        void build_objects_from_collection_of_properties()
+        {
+            // remember extract_a_single_property_from_objects ?
+
+            var names = (string[]) ["Shansai", "Emanuele", "Protesilaos"];
+            var professions = (string[]) ["Developer", "PowerPoint Architect", "Developer"];
+
+            Person[] people = [];
+
+            Assert.Equal(
+                (Person[])
+                [
+                    new Person(Name: "Shansai", Profession: "Developer", Age: 17),
+                    new Person(Name: "Emanuele", Profession: "PowerPoint Architect", Age: 45),
+                    new Person(Name: "Protesilaos", Profession: "Developer", Age: 40),
+                ],
+                people);
+        }
+
+        [Fact]
+        void build_objects_from_a_dictionary_with_properties()
+        {
+            Dictionary<string, (string, int)> namesAndProfessions = new()
+            {
+                ["Shansai"] = ("Developer", 17),
+                ["Emanuele"] = ("PowerPoint Architect", 45),
+                ["Protesilaos"] = ("Developer", 40),
+            };
+
+            Person[] people = [];
+
+            Assert.Equal(
+                (Person[])
+                [
+                    new Person(Name: "Shansai", Profession: "Developer", Age: 17),
+                    new Person(Name: "Emanuele", Profession: "PowerPoint Architect", Age: 45),
+                    new Person(Name: "Protesilaos", Profession: "Developer", Age: 40),
+                ],
+                people);
+        }
+
+        [Fact]
+        void count_the_total_number_of_letters_in_all_the_sentences_both_including_and_excluding_the_spaces()
+        {
+            string[] words = ["one yes", "two no", "three maybe", "four"];
+
+            (int, int) totalNumberOfLetters = (0, 0);
+
+            Assert.Equal((28, 25), totalNumberOfLetters);
+        }
+
+        [Fact]
+        void select_only_the_numbers_whose_value_is_equal_to_their_position_either_in_the_list_or_in_the_reversed_list()
+        {
+            //               0  1  2  3  4  5  6  7
+            int[] numbers = [0, 1, 5, 3, 9, 1, 6, 6];
+            //               0  1  2  3  4  5  6  7
+            //   reversed = [6, 6, 1, 9, 3, 5, 1, 0];
+
+
+            int[] result = numbers;
+            
+            Assert.Equal(
+                (int[]) [0, 1, 5, 3, 6],
+                result);
+        }
+
+        [Fact]
+        void associate_list_items_with_previous_item()
+        {
+            const int defaultValue = 99;
+            int[] numbers = [1, 2, 3, 4, 5];
+
+            (int, int)[] associated = [];
+
+            Assert.Equal(
+                ((int, int)[]) [(1, 99), (2, 1), (3, 2), (4, 3), (5, 4)],
+                associated);
+        }
+
+        [Fact]
+        void associate_list_items_with_next_item()
+        {
+            const int defaultValue = 99;
+            int[] numbers = [1, 2, 3, 4, 5];
+
+            (int, int)[] associated = [];
+
+            Assert.Equal(
+                ((int, int)[]) [(1, 2), (2, 3), (3, 4), (4, 5), (5, 99)],
+                associated);
+        }
+
+
+        [Fact]
+        void implement_Where_using_Aggregate()
+        {
+            bool IsEven(int n) => n % 2 == 0;
+            bool IsNot35(int n) => n != 35;
+
+            int[] numbers = [5, 20, 35, 40, 50];
+
+            int[] Where(int[] xs, Func<int, bool> predicate) => [];
+
+            Assert.Equal(
+                numbers.Where(IsEven),
+                Where(numbers, IsEven));
+
+            Assert.Equal(
+                numbers.Where(IsNot35),
+                Where(numbers, IsNot35));
+        }
+
+        [Fact]
+        void implement_Select_using_Aggregate()
+        {
+            int Plus1(int n) => n + 1;
+            int Twice(int n) => n * 2;
+
+            int[] numbers = [5, 20, 35, 40, 50];
+
+            int[] Select(int[] xs, Func<int, int> f) => [];
+
+            Assert.Equal(
+                numbers.Select(Plus1),
+                Select(numbers, Plus1));
+
+            Assert.Equal(
+                numbers.Select(Twice),
+                Select(numbers, Twice));
+        }
+
+        [Fact]
+        void implement_Select_using_Aggregate_as_a_generic_function()
+        {
+            string AsAString(int n) => n.ToString();
+            int Twice(int n) => n * 2;
+
+            int[] numbers = [5, 20, 35, 40, 50];
+
+            IEnumerable<B> Select<A, B>(IEnumerable<A> xs, Func<A, B> f) => [];
+
+            Assert.Equal(
+                numbers.Select(AsAString),
+                Select(numbers, AsAString));
+
+            Assert.Equal(
+                numbers.Select(Twice),
+                Select(numbers, Twice));
         }
     }
 }
