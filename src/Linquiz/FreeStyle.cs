@@ -215,7 +215,7 @@ public class FreeStyle
             (int[]) [0, 1, 5, 3, 6],
             result);
     }
-
+    
     [Trait("LINQ", "free-style")]
     [Fact]
     void associate_list_items_with_previous_item()
@@ -242,5 +242,19 @@ public class FreeStyle
         Assert.Equal(
             ((int, int)[]) [(1, 2), (2, 3), (3, 4), (4, 5), (5, 99)],
             associated);
+    }
+    
+    [Trait("LINQ", "free-style")]
+    [Fact]
+    void pythagorean_theorem()
+    {
+        // all the right triangles having a and b integers
+        // with a and b between 1 and 10
+        // and a even
+        IEnumerable<(int a, int b, int c)> associated = [];
+
+        Assert.Equal(
+            ((int, int, int)[]) [(4, 3, 5), (6, 8, 10), (8, 6, 10)],
+            associated.ToArray());
     }
 }
